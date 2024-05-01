@@ -1,10 +1,5 @@
 #!/bin/bash
 
-IMAGE_NAME=mypage/service
-IMAGE_TAG_CURRENT=0.0.0
-
-mvn clean package
-
-echo "### Build new image ${IMAGE_NAME}:${IMAGE_TAG_CURRENT}"
-
-docker build  --tag ${IMAGE_NAME}:${IMAGE_TAG_CURRENT} .
+export MA_PAGE_SERVICE_IMAGE_VERSION=0.0.0
+docker build -t rocketgang/mypageservice:$MA_PAGE_SERVICE_IMAGE_VERSION .
+docker push rocketgang/mypageservice:$MA_PAGE_SERVICE_IMAGE_VERSION

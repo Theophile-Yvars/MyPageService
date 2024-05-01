@@ -1,10 +1,10 @@
 version: "3.8"
 services:
   ihm:
-    image: mypage/ihm:0.0.0
+    image: rocketgang/mypageihm:0.0.0
     ports:
       - 80:4200
   service:
-    image: mypage/service:0.0.0
+    image: rocketgang/mypageservice:0.0.0
     ports:
       - 8001:8001
