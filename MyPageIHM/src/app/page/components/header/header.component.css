@@ -1,0 +1,13 @@
+#header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /*background-color: #3F88C5;*/
+    border-bottom: 1px solid black;
+}
+
+#myName{
+    font-size: 20px;
+    font-weight: bolder;
+}
