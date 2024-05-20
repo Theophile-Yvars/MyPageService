@@ -21,3 +21,21 @@
     flex-direction: row;
     gap: 10px;
 }
+
+#myInfos{
+    display: flex;
+    flex-direction: row;
+}
+
+button:hover {
+    background-color: #5c6bc0;
+    border-radius: 4px;
+    color: white;
+  }
+
+  .active {
+    background-color: #5c6bc0;
+    border-radius: 4px;
+    color: white;
+    cursor: default;
+  }

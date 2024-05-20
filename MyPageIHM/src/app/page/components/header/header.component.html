@@ -1,27 +1,37 @@
 <div id="header">
-    <div>
-        <p id="myName">
-            Théophile Yvars
-        </p>
+    <div id="myInfos">
+        <div id="myImg">
+            <img ngSrc="/assets/1715157677158.jpeg" width="100" height="100" priority>
+        </div>
+
+        <div>
+            <p id="myName">
+                Théophile Yvars
+            </p>
+        </div>
     </div>
 
     <div id="headerButton">
-        <button (click)="gotToPage('/home');" mat-button color="primary">
+        <button (click)="gotToPage('/home');" mat-button color="primary"
+            [ngClass]="{'active': isMyRoute('/home')}">
             <mat-icon>home</mat-icon>
             Home
         </button>
         
-        <button (click)="gotToPage('/cv');" mat-button color="primary">
+        <button (click)="gotToPage('/cv');" mat-button color="primary"
+            [ngClass]="{'active': isMyRoute('/cv')}">
             <mat-icon>description</mat-icon>
             CV
         </button>
         
-        <button (click)="gotToPage('/projects');" mat-button color="primary">
+        <button (click)="gotToPage('/projects');" mat-button color="primary"
+            [ngClass]="{'active': isMyRoute('/projects')}">
             <mat-icon>construction</mat-icon>
             Projects
         </button>
         
-        <button (click)="gotToPage('/skills');" mat-button color="primary">
+        <button (click)="gotToPage('/skills');" mat-button color="primary"
+            [ngClass]="{'active': isMyRoute('/skills')}">
             <mat-icon>psychology</mat-icon>
             Skills
         </button>
