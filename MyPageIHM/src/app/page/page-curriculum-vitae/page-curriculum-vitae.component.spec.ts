@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PageCurriculumVitaeComponent } from './page-curriculum-vitae.component';
 
 describe('PageCurriculumVitaeComponent', () => {
