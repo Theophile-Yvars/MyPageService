@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // Configuration de SonarQube
-        sonarQubeScannerHome = tool 'sonarqube-scanner'
-    }
-
     stages {
         stage('Build') {
             steps {
@@ -22,8 +17,8 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo 'Running SonarQube analysis'
-                withSonarQubeEnv('sonarqube-scanner') {
-                    sh "${sonarQubeScannerHome}/bin/sonar-scanner"
+                withSonarQubeEnv(installationName: 'sq1') {
+                    sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 }
             }
         }
