@@ -10,7 +10,6 @@ public class TestController {
     Logger logger = LoggerFactory.getLogger(TestController.class);
     @GetMapping("/test")
     String test(){
-        logger.info("TestController");
         logger.info("My Page service : TEST");
         return "My Page service : TEST";
     }
