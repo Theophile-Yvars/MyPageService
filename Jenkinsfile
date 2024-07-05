@@ -1,20 +1,30 @@
 pipeline {
     agent any
 
+    environment {
+        // Configuration de SonarQube
+        sonarQubeScannerHome = tool 'sonarqube-scanner'
+    }
+
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'Building the project'
+                sh 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo 'Testing the project'
+                sh 'mvn test'
             }
         }
-        stage('Deploy') {
+        stage('SonarQube Analysis') {
             steps {
-                echo 'Deploying....'
+                echo 'Running SonarQube analysis'
+                withSonarQubeEnv('sonarqube-scanner') {
+                    sh "${sonarQubeScannerHome}/bin/sonar-scanner"
+                }
             }
         }
     }
