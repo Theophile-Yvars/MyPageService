@@ -2,8 +2,21 @@ pipeline {
     agent {
         docker { image 'jenkins/agent:jdk17' }
     }
+    tools {
+        maven 'Maven 3.6.3'
+        jdk 'jdk17'
+    }
     
     stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                    echo "JAVA_HOME = ${JAVA_HOME}"
+                '''
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building the project'
