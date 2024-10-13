@@ -2,10 +2,6 @@ pipeline {
     agent {
         docker { image 'jenkins/agent:jdk17' }
     }
-    tools {
-        maven 'Maven 3.6.3'
-        jdk 'jdk17'
-    }
     
     stages {
         stage ('Initialize') {
