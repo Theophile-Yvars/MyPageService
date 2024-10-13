@@ -1,37 +1,39 @@
 pipeline {
-    agent {
-        docker { image 'jenkins/agent:jdk17' }
+    agent any
+
+    tools {
+        maven 'Maven' // Assurez-vous que Maven est configuré dans Jenkins
     }
-    
+
     stages {
-        stage ('Initialize') {
+        stage('Checkout') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                    echo "JAVA_HOME = ${JAVA_HOME}"
-                '''
+                checkout scm
             }
         }
+
         stage('Build') {
             steps {
-                echo 'Building the project'
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn clean install'
             }
         }
+
         stage('Test') {
             steps {
-                echo 'Testing the project'
                 sh 'mvn test'
             }
         }
-        stage('SonarQube Analysis') {
+
+        stage('Deploy') {
             steps {
-                echo 'Running SonarQube analysis'
-                withSonarQubeEnv(installationName: 'sq1') {
-                    sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
-                }
+                // Ajoutez ici les étapes de déploiement si nécessaire
             }
+        }
+    }
+
+    post {
+        always {
+            junit '**/target/surefire-reports/TEST-*.xml'
         }
     }
 }
