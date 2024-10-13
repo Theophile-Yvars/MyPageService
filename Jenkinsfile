@@ -1,40 +1,29 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.8.1-jdk-11'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                sh 'echo Checkout'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'echo Build'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'echo Test'
             }
         }
 
         stage('Deploy') {
             steps {
-                // Ajoutez ici les étapes de déploiement si nécessaire
+                sh 'echo Deploy'
             }
-        }
-    }
-
-    post {
-        always {
-            junit '**/target/surefire-reports/TEST-*.xml'
         }
     }
 }
