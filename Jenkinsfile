@@ -1,15 +1,28 @@
 pipeline {
-    agent any
-
-    environment {
-        MAVEN_HOME = tool name: 'maven:3.9.9', type: 'maven'
+    agent {
+        label 'agent1'
     }
 
     stages {
         stage('Build') {
             steps {
-                sh "${MAVEN_HOME}/bin/mvn -B -DskipTests clean package"
+                // Utilisation de Maven pour construire le projet
+                sh "mvn -B -DskipTests clean package"
             }
+        }
+
+        stage('Test') {
+            steps {
+                // Exécution des tests
+                sh "mvn test"
+            }
+        }
+    }
+
+    post {
+        always {
+            // Nettoyage du workspace
+            cleanWs()
         }
     }
 }
