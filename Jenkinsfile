@@ -4,13 +4,6 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                // Nettoyage du workspace avant de commencer le build
-                cleanWs()
-            }
-        }
-
         stage('Build') {
             steps {
                 // Utilisation de Maven pour construire le projet
