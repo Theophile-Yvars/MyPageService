@@ -6,23 +6,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Utilisation de Maven pour construire le projet
-                sh "mvn -B -DskipTests clean package"
+                sh 'mvn -B -DskipTests clean package'
             }
         }
-
-        stage('Test') {
+        stage('Test') { 
             steps {
-                // Exécution des tests
-                sh "mvn test"
+                sh 'mvn test' 
             }
-        }
-    }
-
-    post {
-        always {
-            // Nettoyage du workspace après le build
-            cleanWs()
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml' 
+                }
+            }
         }
     }
 }
