@@ -2,7 +2,9 @@ pipeline {
     agent {
         label 'agent1'
     }
-
+    tools {
+        maven 'maven:3.9.9' // Remplacez par la version de Maven que vous avez configurée
+    }
     stages {
         stage('Build') {
             steps {
