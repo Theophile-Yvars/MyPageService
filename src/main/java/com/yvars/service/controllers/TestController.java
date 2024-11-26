@@ -12,6 +12,7 @@ public class TestController {
      * test 1
      * test 2
      * test 3
+     * test 4
      */
     Logger logger = LoggerFactory.getLogger(TestController.class);
     @GetMapping("/test")
