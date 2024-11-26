@@ -5,9 +5,6 @@ pipeline {
     tools {
         maven 'maven:3.9.9' // Remplacez par la version de Maven que vous avez configurée
     }
-    environment {
-        SONAR_SCANNER_HOME = tool 'SonarQube Scanner' // Remplacez par le nom de l'outil SonarQube Scanner configuré dans Jenkins
-    }
     stages {
         stage('Build') {
             steps {
@@ -26,7 +23,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sq1') { // Remplacez 'SonarQube' par le nom de l'instance SonarQube configurée dans Jenkins
+                withSonarQubeEnv(installationName : 'sq1') { // Remplacez 'SonarQube' par le nom de l'instance SonarQube configurée dans Jenkins
                     sh 'mvn sonar:sonar'
                 }
             }
