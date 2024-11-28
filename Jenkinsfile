@@ -3,7 +3,7 @@ pipeline {
         label 'agent1'
     }
     tools {
-        maven 'maven:3.9.9' // Remplacez par la version de Maven que vous avez configurée
+        maven 'maven:3.9.9' 
     }
     stages {
         stage('Build') {
@@ -11,20 +11,31 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('Test') { 
+        stage('Test') {
             steps {
-                sh 'mvn test' 
+                sh 'mvn test'
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml' 
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv(installationName : 'sq1') { // Remplacez 'SonarQube' par le nom de l'instance SonarQube configurée dans Jenkins
-                    sh 'mvn sonar:sonar'
+                script {
+                    // Obtenir le nom de la branche
+                    def branchName = env.BRANCH_NAME ?: 'main'
+
+                    // Obtenir l'artifactId du projet Maven
+                    def artifactId = sh(script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout', returnStdout: true).trim()
+
+                    // Définir le nom du projet SonarQube
+                    def projectKey = "${artifactId}-${branchName}"
+
+                    withSonarQubeEnv(installationName: 'sq1') { // Remplacez 'sq1' par le nom de l'instance SonarQube configurée dans Jenkins
+                        sh "mvn sonar:sonar -Dsonar.projectKey=${projectKey}"
+                    }
                 }
             }
         }
