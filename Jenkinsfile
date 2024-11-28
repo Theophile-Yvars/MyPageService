@@ -34,7 +34,7 @@ pipeline {
                     def projectKey = "${artifactId}-${branchName}"
 
                     withSonarQubeEnv(installationName: 'sq1') { // Remplacez 'sq1' par le nom de l'instance SonarQube configurée dans Jenkins
-                        sh "mvn sonar:sonar -Dsonar.projectKey=${projectKey}"
+                        sh "mvn sonar:sonar -Dsonar.projectKey=${projectKey} -Dsonar.projectName=${projectKey}"
                     }
                 }
             }
