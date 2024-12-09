@@ -7,6 +7,8 @@ pipeline {
     }
     environment {
         NEXUS_URL = credentials('nexus-url')
+        NEXUS_REPOSITORY = 'my-page'
+        NEXUS_CREDENTIALS_ID = credentials('nexus-credentials-id')
     }
     stages {
         stage('Build') {
@@ -75,47 +77,20 @@ pipeline {
                     // Définir le nom du projet Nexus
                     def projectKey = "${artifactId}-SNAPSHOT"
 
-                    // Créer le fichier settings.xml avec les identifiants
-                    writeFile file: 'settings.xml', text: """
-                    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-                        <servers>
-                            <server>
-                                <id>nexus</id>
-                                <username>\${NEXUS_USERNAME}</username>
-                                <password>\${NEXUS_PASSWORD}</password>
-                            </server>
-                        </servers>
-                        <profiles>
-                            <profile>
-                                <id>nexus</id>
-                                <repositories>
-                                    <repository>
-                                        <id>nexus</id>
-                                        <url>\${NEXUS_URL}/repository/maven-snapshots/</url>
-                                        <releases>
-                                            <enabled>false</enabled>
-                                        </releases>
-                                        <snapshots>
-                                            <enabled>true</enabled>
-                                        </snapshots>
-                                    </repository>
-                                </repositories>
-                            </profile>
-                        </profiles>
-                        <activeProfiles>
-                            <activeProfile>nexus</activeProfile>
-                        </activeProfiles>
-                    </settings>
-                    """
-
                     // Déployer vers Nexus
-                    withCredentials([usernamePassword(usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        sh """
-                        mvn deploy -s settings.xml -DaltDeploymentRepository=nexus::default::${NEXUS_URL}/repository/maven-snapshots/
-                        """
-                    }
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: "${NEXUS_URL}",
+                        version: version,
+                        credentialsId: "${NEXUS_CREDENTIALS_ID}",
+                        artifacts: [
+                            [artifactId: artifactId,
+                             classifier: '',
+                             file: "target/${artifactId}-${version}.jar",
+                             type: 'jar']
+                        ]
+                    )
                 }
             }
         }
