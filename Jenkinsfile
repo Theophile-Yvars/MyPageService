@@ -113,7 +113,9 @@ pipeline {
                     """
 
                     // Déployer vers Nexus
-                    sh "mvn deploy -s settings.xml -DaltDeploymentRepository=nexus::default::${NEXUS_URL}/repository/maven-snapshots/"
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
+                        sh "mvn deploy -s settings.xml -DaltDeploymentRepository=nexus::default::${NEXUS_URL}/repository/maven-snapshots/"
+                    }
                 }
             }
         }
