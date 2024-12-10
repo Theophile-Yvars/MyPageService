@@ -7,7 +7,6 @@ pipeline {
     }
     environment {
         NEXUS_URL = credentials('nexus-url')
-        NEXUS_REPOSITORY = 'my-page'
         NEXUS_CREDENTIALS_ID = credentials('nexus-credentials-id')
     }
     stages {
