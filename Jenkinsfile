@@ -6,8 +6,7 @@ pipeline {
         maven 'maven:3.9.9'
     }
     environment {
-        NEXUS_URL = credentials('nexus-url')
-        NEXUS_CREDENTIALS_ID = credentials('nexus-credentials-id')
+        NEXUS_URL = 'http://manager1:8083'
     }
     stages {
         stage('Build') {
