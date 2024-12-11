@@ -84,7 +84,7 @@ pipeline {
                         protocol: 'http',
                         nexusUrl: "${NEXUS_URL}",
                         version: version,
-                        credentialsId: "${NEXUS_CREDENTIALS_ID}",
+                        credentialsId: 'nexus-credentials-id',
                         artifacts: [
                             [artifactId: artifactId,
                              classifier: '',
