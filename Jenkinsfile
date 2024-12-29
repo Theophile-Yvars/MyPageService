@@ -78,7 +78,7 @@ pipeline {
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
-                        nexusUrl: "${NEXUS_URL}",
+                        nexusUrl: "manager1:8083",
                         version: version,
                         credentialsId: 'nexus-credentials-id',
                         artifacts: [
