@@ -27,11 +27,11 @@
     <!-- Distribution management (ajoutez cette section pour le déploiement) -->
     <distributionManagement>
         <repository>
-            <id>nexus-snapshots</id> <!-- Le même ID que dans la section des repositories -->
-            <url>http://manager1:8083/repository/maven-snapshots/</url>
+            <id>nexus-releases</id>
+            <url>http://manager1:8083/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>nexus-snapshots</id> <!-- Le même ID que dans la section des repositories -->
+            <id>nexus-snapshots</id>
             <url>http://manager1:8083/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
