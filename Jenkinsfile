@@ -92,6 +92,7 @@ pipeline {
                     sh 'git add pom.xml'
                     sh 'git commit -m "Update version"'
                     sh "git checkout ${env.BRANCH_NAME}"
+                    sh "git pull"
 
                     // to that repository using username and password.
                     withCredentials([usernamePassword(credentialsId: 'git-pass-credentials-ID', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
