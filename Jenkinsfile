@@ -106,7 +106,7 @@ pipeline {
 
                     // Ajouter et committer le changement de version dans Git
                     sh 'git add pom.xml'
-                    sh 'git commit -m "Update version to ${newVersion}"'
+                    sh 'git commit -m "Update version"'
 
                     // Pousser le commit vers GitHub
                     sh 'git push origin ${env.BRANCH_NAME}'
