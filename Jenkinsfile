@@ -92,8 +92,9 @@ pipeline {
 
                     // Use the GitHub token for authentication
                     withCredentials([string(credentialsId: 'github-token-id', variable: 'GITHUB_TOKEN')]) {
-                        sh "git push https://github.com/Theophile-Yvars/MyPageService.git ${env.BRANCH_NAME}"
+                        sh "git push https://username:${GITHUB_TOKEN}@github.com/Theophile-Yvars/MyPageService.git ${env.BRANCH_NAME}"
                     }
+
                 }
             }
         }
