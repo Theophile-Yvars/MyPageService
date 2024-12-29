@@ -84,6 +84,7 @@ pipeline {
                     sh 'git config user.name "Jenkins"'
                     sh 'git config user.email "jenkins@ci.com"'
 
+                    sh 'git stash'
                     sh "git checkout ${env.BRANCH_NAME}"
 
                     // Ajouter et committer le changement de version dans Git
@@ -92,7 +93,7 @@ pipeline {
 
                     // to that repository using username and password.
                     withCredentials([usernamePassword(credentialsId: 'git-pass-credentials-ID', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}}@github.com/Theophile-Yvars/MyPageService.git ${env.BRANCH_NAME}"
+                        sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Theophile-Yvars/MyPageService.git ${env.BRANCH_NAME}"
                     }
                 }
             }
