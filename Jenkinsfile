@@ -90,11 +90,10 @@ pipeline {
                     sh 'git add pom.xml'
                     sh 'git commit -m "Update version"'
 
-                    // Use the GitHub token for authentication
-                    withCredentials([string(credentialsId: 'github-token-id', variable: 'GITHUB_TOKEN')]) {
-                        sh "git push https://username:${GITHUB_TOKEN}@github.com/Theophile-Yvars/MyPageService.git ${env.BRANCH_NAME}"
+                    // to that repository using username and password.
+                    withCredentials([usernamePassword(credentialsId: 'git-pass-credentials-ID', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}}@github.com/Theophile-Yvars/MyPageService.git ${env.BRANCH_NAME}"
                     }
-
                 }
             }
         }
