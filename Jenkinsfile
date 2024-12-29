@@ -59,6 +59,7 @@ pipeline {
                     def newVersion = incrementVersion(currentVersion, changeType)
 
                     // Mettre à jour la version du projet
+                    sh "git checkout ${env.BRANCH_NAME}"
                     sh "mvn versions:set -DnewVersion=${newVersion}"
                     sh "mvn versions:commit"
 
@@ -84,8 +85,8 @@ pipeline {
                     sh 'git config user.name "Jenkins"'
                     sh 'git config user.email "jenkins@ci.com"'
 
-                    sh 'git stash'
-                    sh "git checkout ${env.BRANCH_NAME}"
+                   
+                    
 
                     // Ajouter et committer le changement de version dans Git
                     sh 'git add pom.xml'
