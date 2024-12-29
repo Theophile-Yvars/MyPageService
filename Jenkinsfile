@@ -69,26 +69,24 @@ pipeline {
             }
             steps {
                 script {
-                    // Obtenir l'artifactId du projet Maven
-                    def artifactId = sh(script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout', returnStdout: true).trim()
-                    // Obtenir la version du projet Maven
-                    def version = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-                    sh 'ls -l target'
-                    // Déployer vers Nexus
-                    nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        repository: 'maven-snapshots',
-                        nexusUrl: "manager1:8083",
-                        version: version,
-                        credentialsId: 'nexus-credentials-id',
-                        artifacts: [
-                            [artifactId: artifactId,
-                             classifier: '',
-                             file: "target/${artifactId}-${version}.jar",
-                             type: 'jar']
-                        ]
-                    )
+                    // Utilisation des credentials pour récupérer le nom d'utilisateur et le mot de passe
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
+                        // Création d'un fichier settings.xml temporaire avec les secrets
+                        writeFile file: 'settings.xml', text: """
+                            <settings>
+                                <servers>
+                                    <server>
+                                        <id>nexus-snapshots</id>
+                                        <username>${NEXUS_USERNAME}</username>
+                                        <password>${NEXUS_PASSWORD}</password>
+                                    </server>
+                                </servers>
+                            </settings>
+                        """
+
+                        // Exécution de la commande Maven avec le settings.xml temporaire
+                        sh 'mvn deploy -s settings.xml'
+                    }
                 }
             }
         }
