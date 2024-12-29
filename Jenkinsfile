@@ -104,6 +104,8 @@ pipeline {
                     sh 'git config user.name "Jenkins"'
                     sh 'git config user.email "jenkins@ci.com"'
 
+                    sh "git checkout ${env.BRANCH_NAME}"
+
                     // Ajouter et committer le changement de version dans Git
                     sh 'git add pom.xml'
                     sh 'git commit -m "Update version"'
