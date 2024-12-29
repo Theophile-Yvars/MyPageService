@@ -61,6 +61,8 @@ pipeline {
                     // Mettre à jour la version du projet
                     sh 'git stash'
                     sh "git checkout ${env.BRANCH_NAME}"
+                    sh "git pull"
+                    sh "git stash"
                     sh "mvn versions:set -DnewVersion=${newVersion}"
                     sh "mvn versions:commit"
 
