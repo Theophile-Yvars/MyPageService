@@ -41,7 +41,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }/*
         stage('Update Version') {
             when {
                 expression { return env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'main' }
@@ -62,7 +62,7 @@ pipeline {
                     sh "mvn versions:commit"
                 }
             }
-        }
+        }*/
         stage('Deploy to Nexus') {
             when {
                 expression { return env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'main' }
