@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
         NEXUS_URL = 'http://manager1:8083'
+        GITHUB_REPO = 'https://github.com/Theophile-Yvars/MyPageService.git'
     }
     stages {
         stage('Build') {
@@ -41,28 +42,7 @@ pipeline {
                     }
                 }
             }
-        }/*
-        stage('Update Version') {
-            when {
-                expression { return env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'main' }
-            }
-            steps {
-                script {
-                    // Lire la version actuelle du pom.xml
-                    def currentVersion = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-
-                    // Déterminer le type de changement en fonction de la branche et de l'action
-                    def changeType = determineChangeType(env.BRANCH_NAME, env.CHANGE_ID)
-
-                    // Incrémenter la version en fonction des changements
-                    def newVersion = incrementVersion(currentVersion, changeType)
-
-                    // Mettre à jour la version du projet
-                    sh "mvn versions:set -DnewVersion=${newVersion}"
-                    sh "mvn versions:commit"
-                }
-            }
-        }*/
+        }
         stage('Deploy to Nexus') {
             when {
                 expression { return env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'main' }
@@ -110,8 +90,10 @@ pipeline {
                     sh 'git add pom.xml'
                     sh 'git commit -m "Update version"'
 
-                    // Pousser le commit vers GitHub
-                    sh "git push origin ${env.BRANCH_NAME}"
+                    // Use the GitHub token for authentication
+                    withCredentials([string(credentialsId: 'github-token-id', variable: 'GITHUB_TOKEN')]) {
+                        sh "git push https://github.com/Theophile-Yvars/MyPageService.git ${env.BRANCH_NAME}"
+                    }
                 }
             }
         }
