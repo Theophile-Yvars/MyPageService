@@ -78,6 +78,7 @@ pipeline {
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
+                        repository: 'maven-snapshots',
                         nexusUrl: "manager1:8083",
                         version: version,
                         credentialsId: 'nexus-credentials-id',
