@@ -59,6 +59,7 @@ pipeline {
                     def newVersion = incrementVersion(currentVersion, changeType)
 
                     // Mettre à jour la version du projet
+                    sh 'git stash'
                     sh "git checkout ${env.BRANCH_NAME}"
                     sh "mvn versions:set -DnewVersion=${newVersion}"
                     sh "mvn versions:commit"
