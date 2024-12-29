@@ -71,12 +71,9 @@ pipeline {
                 script {
                     // Obtenir l'artifactId du projet Maven
                     def artifactId = sh(script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout', returnStdout: true).trim()
-
-                    // Définir le nom du projet Nexus
-                    artifactId = "${artifactId}-SNAPSHOT"
                     // Obtenir la version du projet Maven
                     def version = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-
+                    sh 'ls -l target'
                     // Déployer vers Nexus
                     nexusArtifactUploader(
                         nexusVersion: 'nexus3',
