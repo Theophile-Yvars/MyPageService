@@ -109,7 +109,7 @@ pipeline {
                     sh 'git commit -m "Update version"'
 
                     // Pousser le commit vers GitHub
-                    sh 'git push origin ${env.BRANCH_NAME}'
+                    sh "git push origin ${env.BRANCH_NAME}"
                 }
             }
         }
